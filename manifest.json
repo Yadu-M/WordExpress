@@ -4,7 +4,7 @@
     "version": "1.0",
     "description": "Display word definition of highlighted word",
     "action": {
-        "default_popup" : "./html/popup.html"
+        "default_popup" : "./html-css/popup.html"
     },
     "icons": {
         "16": "images/get_started16.png",
@@ -13,7 +13,9 @@
         "128": "images/get_started128.png"
     },    
     "permissions": [
-        "tabs"
+        "storage",
+        "contextMenus",
+        "tts"
     ],
     "background": {
         "service_worker": "service-worker.js",
@@ -21,10 +23,11 @@
     },
     "content_scripts": [
         {
-            "js": ["scripts/content.js"],
+            "js": ["content.js"],
             "matches": [
                 "<all_urls>"
             ]
         }
     ]
+
   }
