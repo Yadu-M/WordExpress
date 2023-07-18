@@ -1,4 +1,3 @@
-
 chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
   /**
    * Onboarding
@@ -27,6 +26,7 @@ chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
   chrome.tts.getVoices()
     .then(response => {
       response.forEach(element => {
+        
         availableLanguages[element.lang] = element.voiceName;
       });
     })
@@ -48,23 +48,8 @@ chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
 
 
 
-chrome.contextMenus.onClicked.addListener (
-  info => {
-    console.log(info.selectionText);
-    let TtsOptions = {
-      'enqueue': true,
-      'lang': 'fr-FR',
-      'pitch': 0.5,
-      'voiceName': 'Google français',
-      'volume': 0.5
-    };
 
-    chrome.tts.speak(`${info.selectionText}`, TtsOptions)
-      .then(response => console.log(response));
-});
-
-
-const API = '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'
+const API = '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'
 const url = 'https://api.openai.com/v1/completions'
 
 /**
@@ -73,7 +58,8 @@ const url = 'https://api.openai.com/v1/completions'
  */
 async function translatedText(text) {
   
-  fetch(url, {
+  let ans = ''
+  await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -86,20 +72,35 @@ async function translatedText(text) {
                 Start of the text: 
                 ${text}
                 End of the text:`,
-      'max_tokens': 7,
+      'max_tokens': 15,
       'temperature': 0
     })
   })
   .then(response => response.json())
   .then(data => {
-    data = cleanUpText(data['choices'][0]['text'])
-    console.log(data)
+    ans = data.choices[0].text;
   })
   .catch(error => console.log(error))  
+
+  return ans;
+
 }
 
-
-
+chrome.contextMenus.onClicked.addListener (
+  info => {
+    translatedText(info.selectionText).then(data => {      
+      let TtsOptions = {
+        'enqueue': true,
+        'lang': 'fr-FR',
+        'pitch': 0.5,
+        'voiceName': 'Google français',
+        'volume': 1
+      };
+      chrome.tts.speak(`${data}`, TtsOptions);
+    });
+   
+  }
+);
 
 
 

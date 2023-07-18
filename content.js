@@ -14,13 +14,15 @@ async function loadlanguageOptions(func) {
 
     //  fetching the languages
     await func()
-    .then(response => languageList = response);  
+    .then(response => languageList = response)
+    .catch(error => console.log(error));  
 
     const languageKey = Object.keys(languageList);
 
     // injecting each option for the language dropdown
     languageKey.forEach((key) => {
         const option = document.createElement("option");
+        
         option.text = key;
         option.value = languageList.key;
 
