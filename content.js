@@ -45,5 +45,3 @@ async function languages() {
         console.error(error);
     }
 }
-
-

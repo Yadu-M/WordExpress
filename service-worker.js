@@ -23,6 +23,7 @@ chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
  */
   let availableLanguages = {};
 
+   
   chrome.tts.getVoices()
     .then(response => {
       response.forEach(element => {
