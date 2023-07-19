@@ -1,0 +1,21 @@
+{
+  "name": "wordexpress-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "functions-framework --target=wordExpressBackend "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^3.3.0"
+  }
+}
