@@ -44,47 +44,56 @@ chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
         else sendResponse('made no sense');
     })
 
+
+   
+
+
+
 });
-
-
-
-
-const API = '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'
-const url = 'https://api.openai.com/v1/completions'
 
 /**
  * @property {String} text - Required text to be translated by GPT
  * @return {String} 
  */
-async function translatedText(text) {
+
+
+
+// const API = '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'
+// const url = 'https://api.openai.com/v1/completions'
+
+// /**
+//  * @property {String} text - Required text to be translated by GPT
+//  * @return {String} 
+//  */
+// async function translatedText(text) {
   
-  let ans = ''
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer " + API,
-    },
-    body: JSON.stringify({
-      'model': 'text-davinci-003',
-      'prompt': `You are a translation bot, help me translate
-                the following text into french:
-                Start of the text: 
-                ${text}
-                End of the text:`,
-      'max_tokens': 15,
-      'temperature': 0
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    ans = data.choices[0].text;
-  })
-  .catch(error => console.log(error))  
+//   let ans = ''
+//   await fetch(url, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': "Bearer " + API,
+//     },
+//     body: JSON.stringify({
+//       'model': 'text-davinci-003',
+//       'prompt': `You are a translation bot, help me translate
+//                 the following text into french:
+//                 Start of the text: 
+//                 ${text}
+//                 End of the text:`,
+//       'max_tokens': 15,
+//       'temperature': 0
+//     })
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     ans = data.choices[0].text;
+//   })
+//   .catch(error => console.log(error))  
 
-  return ans;
+//   return ans;
 
-}
+// }
 
 chrome.contextMenus.onClicked.addListener (
   info => {
