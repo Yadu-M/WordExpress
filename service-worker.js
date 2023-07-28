@@ -1,3 +1,6 @@
+let availableLanguages = {};
+let userLang = '';
+
 chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
   /**
    * Onboarding
@@ -20,7 +23,6 @@ chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
   /**
  * Grabbing all the available tts languages
  */
-  let availableLanguages = {};
 
    
   chrome.tts.getVoices()
@@ -95,21 +97,29 @@ chrome.runtime.onInstalled.addListener(({reason, previousVersion}) => {
 
 // }
 
+chrome.storage.onChanged.addListener(
+  (changes, areaName) => {
+    console.log(changes.selectedLang.newValue);
+    userLang = changes.selectedLang.newValue;
+  }
+)
+
+
 chrome.contextMenus.onClicked.addListener (
   info => {
-    translatedText(info.selectionText).then(data => {      
-      let TtsOptions = {
-        'enqueue': true,
-        'lang': 'fr-FR',
-        'pitch': 0.5,
-        'voiceName': 'Google français',
-        'volume': 1
-      };
-      chrome.tts.speak(`${data}`, TtsOptions);
-    });
-   
-  }
-);
+
+    let TtsOptions = {
+      'enqueue': true,
+      'lang': userLang,
+      'pitch': 0.5,
+      'voiceName': availableLanguages[userLang],
+      'volume': 1
+    }
+
+    chrome.tts.speak(`${info.selectionText}`, TtsOptions);
+
+      
+});;
 
 
 
